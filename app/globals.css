@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-[#0f1117] text-[#e2e4f0] font-sans text-sm; }
+  h1   { @apply text-xl font-bold mb-5; }
+  h2   { @apply text-base font-semibold mb-3; }
+  label { @apply text-[12px] font-semibold text-zinc-400 block mb-1 mt-3; }
+  input[type="text"], input[type="password"], input[type="number"], textarea, select {
+    @apply w-full bg-[#20243a] border border-[#2a2d3e] rounded-lg px-3 py-2 text-[13px]
+           text-[#e2e4f0] outline-none placeholder:text-zinc-500
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20;
+  }
+  select { @apply cursor-pointer; }
+}
+
+@layer components {
+  .card        { @apply bg-[#1a1d27] border border-[#2a2d3e] rounded-lg p-4 shadow; }
+  .table-wrap  { @apply bg-[#1a1d27] border border-[#2a2d3e] rounded-lg shadow overflow-x-auto; }
+  .btn         { @apply inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[13px] font-medium cursor-pointer transition-all border border-transparent no-underline; }
+  .btn-primary   { @apply bg-blue-600 text-white hover:bg-blue-700; }
+  .btn-secondary { @apply bg-[#20243a] text-[#e2e4f0] border-[#2a2d3e] hover:bg-[#252840]; }
+  .btn-success   { @apply bg-emerald-900 text-emerald-300 hover:bg-emerald-800; }
+  .btn-sm  { @apply px-2.5 py-1 text-[12px]; }
+  .btn-xs  { @apply px-2 py-0.5 text-[11px]; }
+}
