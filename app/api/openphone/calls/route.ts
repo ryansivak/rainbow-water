@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
             maxResults: '1',
           });
           qs.append('participants', participant);
-          const callData = await opFetch(`/calls?${qs}`, cfg.openPhoneApiKey);
+          const callData = await opFetch(`/calls?${qs}`, cfg.openPhoneApiKey!);
           return { ...conv, lastCall: (callData.data || [])[0] || null };
         } catch {
           return { ...conv, lastCall: null };
