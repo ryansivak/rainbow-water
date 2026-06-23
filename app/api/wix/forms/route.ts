@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { loadConfig } from '@/lib/config';
 
@@ -19,7 +20,7 @@ async function wixReq(method: 'GET' | 'POST', path: string, apiKey: string, site
 export async function GET(req: NextRequest) {
   const cfg = loadConfig();
   if (!cfg.wixApiKey || !cfg.wixSiteId)
-    return NextResponse.json({ error: 'Wix not configured — go to Settings.' }, { status: 400 });
+    return NextResponse.json({ error: 'Wix not configured â€” go to Settings.' }, { status: 400 });
 
   const p = req.nextUrl.searchParams;
   const limit = parseInt(p.get('limit') || '50');
@@ -36,7 +37,7 @@ export async function GET(req: NextRequest) {
     const data = await wixReq('POST', '/forms/v4/submissions/query', cfg.wixApiKey, cfg.wixSiteId, body);
     return NextResponse.json({ ...data, source: 'forms' });
   } catch {
-    // Forms API unavailable — fall back to contacts with WIX_FORMS source
+    // Forms API unavailable â€” fall back to contacts with WIX_FORMS source
   }
 
   try {
@@ -66,3 +67,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+

@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { loadConfig, saveConfig } from '@/lib/config';
 import { invalidateToken } from '@/lib/tuya';
@@ -28,3 +29,4 @@ export async function POST(req: NextRequest) {
   saveConfig(cfg);
   return NextResponse.json({ ok: true });
 }
+

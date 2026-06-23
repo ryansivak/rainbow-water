@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { loadConfig } from '@/lib/config';
 
@@ -19,7 +20,7 @@ async function wixQuery(endpoint: string, body: object, apiKey: string, siteId: 
 export async function GET(req: NextRequest) {
   const cfg = loadConfig();
   if (!cfg.wixApiKey || !cfg.wixSiteId)
-    return NextResponse.json({ error: 'Wix not configured — go to Settings.' }, { status: 400 });
+    return NextResponse.json({ error: 'Wix not configured â€” go to Settings.' }, { status: 400 });
   try {
     const p = req.nextUrl.searchParams;
     const body: any = {
@@ -35,3 +36,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+

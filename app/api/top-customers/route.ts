@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const db = getDb();
+  if (!db) return NextResponse.json([]);
   const rows = db.prepare(`
     SELECT c.*,
       (SELECT body FROM messages WHERE normalized_phone=c.normalized_phone ORDER BY datetime DESC LIMIT 1) as last_message

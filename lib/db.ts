@@ -1,15 +1,16 @@
-import Database from 'better-sqlite3';
-import path from 'path';
+const DB_PATH = process.env.DB_PATH || 'D:\\Rainbow_Water\\app\\db\\rainbow.db';
 
-// Absolute path to the shared SQLite database
-const DB_PATH = 'D:\\Rainbow_Water\\app\\db\\rainbow.db';
+let _db: any = null;
 
-let _db: Database.Database | null = null;
-
-export function getDb(): Database.Database {
-  if (!_db) {
+export function getDb(): any | null {
+  if (_db) return _db;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const Database = require('better-sqlite3');
     _db = new Database(DB_PATH);
     _db.pragma('journal_mode = WAL');
+    return _db;
+  } catch {
+    return null;
   }
-  return _db;
 }

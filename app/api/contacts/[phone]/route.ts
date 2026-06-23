@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+export const dynamic = 'force-dynamic';
 
 export async function GET(_req: NextRequest, { params }: { params: { phone: string } }) {
   const db = getDb();
+  if (!db) return NextResponse.json({ error: 'DB unavailable' }, { status: 503 });
   const norm = decodeURIComponent(params.phone);
   const contact = db.prepare('SELECT * FROM contacts WHERE normalized_phone=?').get(norm);
   if (!contact) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -18,6 +20,7 @@ export async function GET(_req: NextRequest, { params }: { params: { phone: stri
 
 export async function PATCH(req: NextRequest, { params }: { params: { phone: string } }) {
   const db = getDb();
+  if (!db) return NextResponse.json({ ok: false, error: 'DB unavailable' });
   const norm = decodeURIComponent(params.phone);
   const { name, address, notes, tags, lead_status } = await req.json();
   db.prepare(`UPDATE contacts SET

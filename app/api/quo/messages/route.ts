@@ -1,3 +1,4 @@
+﻿export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { loadConfig } from '@/lib/config';
 
@@ -13,7 +14,7 @@ async function quoFetch(path: string, apiKey: string) {
 export async function GET(req: NextRequest) {
   const cfg = loadConfig();
   if (!cfg.openPhoneApiKey)
-    return NextResponse.json({ error: 'Quo not configured — go to Settings.' }, { status: 400 });
+    return NextResponse.json({ error: 'Quo not configured â€” go to Settings.' }, { status: 400 });
 
   try {
     const p = req.nextUrl.searchParams;
@@ -72,3 +73,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+

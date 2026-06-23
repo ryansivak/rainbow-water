@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const db = getDb();
   const q = req.nextUrl.searchParams.get('q') || '';
-  if (!q.trim()) return NextResponse.json({ contacts:[], messages:[], voicemails:[] });
+  if (!q.trim() || !db) return NextResponse.json({ contacts:[], messages:[], voicemails:[] });
   const like = `%${q}%`;
   return NextResponse.json({
     contacts:  db.prepare('SELECT * FROM contacts WHERE name LIKE ? OR phone LIKE ? OR address LIKE ? LIMIT 50').all(like,like,like),

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const db = getDb();
+  if (!db) return NextResponse.json([]);
   const status = req.nextUrl.searchParams.get('status');
   let sql = `SELECT l.*, c.name as contact_name, c.text_count, c.call_count, c.last_contact
     FROM leads l LEFT JOIN contacts c ON l.phone=c.normalized_phone`;
