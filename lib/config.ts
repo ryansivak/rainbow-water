@@ -13,10 +13,25 @@ export interface AppConfig {
   tuyaThresholds?: Record<string, number>;
 }
 
-export function loadConfig(): AppConfig {
+function fileConfig(): AppConfig {
   try { return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8')); } catch { return {}; }
 }
 
+export function loadConfig(): AppConfig {
+  const file = fileConfig();
+  return {
+    wixApiKey:      process.env.WIX_API_KEY      || file.wixApiKey,
+    wixSiteId:      process.env.WIX_SITE_ID      || file.wixSiteId,
+    openPhoneApiKey:process.env.QUO_API_KEY       || file.openPhoneApiKey,
+    tuyaClientId:   process.env.TUYA_CLIENT_ID    || file.tuyaClientId,
+    tuyaSecret:     process.env.TUYA_SECRET       || file.tuyaSecret,
+    tuyaRegion:     process.env.TUYA_REGION       || file.tuyaRegion,
+    tuyaDeviceIds:  process.env.TUYA_DEVICE_IDS   || file.tuyaDeviceIds,
+    tuyaThresholds: file.tuyaThresholds,
+  };
+}
+
 export function saveConfig(data: AppConfig): void {
-  fs.writeFileSync(CONFIG_PATH, JSON.stringify(data, null, 2));
+  const current = fileConfig();
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify({ ...current, ...data }, null, 2));
 }
